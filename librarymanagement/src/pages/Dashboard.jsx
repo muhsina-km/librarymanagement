@@ -63,9 +63,7 @@ const Dashboard = () => {
           <Button variant="contained" onClick={handleSearch} style={{ marginBottom: '20px' }}>
             Search
           </Button>
-        </>
-      )}
-            <br />
+             <br />
         <div style={{ display: 'inline-flex', alignItems: 'center' }}>
         <h4 style={{ marginRight: '10px' }}>Here is your borrow history:</h4>
         <Button
@@ -78,8 +76,9 @@ const Dashboard = () => {
             Borrow Details
         </Button>
         </div>
-
-      
+        </>
+      )}
+         
       <Typography variant="h4" gutterBottom style={{ fontWeight: 'bold' }}>
         Available Books :
       </Typography>
