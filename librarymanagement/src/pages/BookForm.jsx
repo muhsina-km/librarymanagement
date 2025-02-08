@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, Alert } from '@mui/material';
 import API from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ const BookForm = ({ book, onSave }) => {
   const [publishedYear, setPublishedYear] = useState('');
   const [availableCopies, setAvailableCopies] = useState(1);
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
 
   // If book prop is provided (i.e., editing an existing book), populate the form fields
   useEffect(() => {
@@ -35,15 +36,20 @@ const BookForm = ({ book, onSave }) => {
         await API.post('/books', bookData);
       }
       onSave(); // Callback to refresh the book list
-      navigate('/dashboard'); // Redirect to the dashboard
+      setAlert({ message: 'Book saved successfully!', severity: 'success' });
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 2000);
+     
     } catch (err) {
-      alert('Failed to save book');
+      setAlert({ message: 'Failed to save book', severity: 'error' });
       console.error(err);
     }
   };
 
   return (
     <Container maxWidth="sm">
+      {alert && <Alert severity={alert.severity}>{alert.message}</Alert>}
       <Typography variant="h4" gutterBottom>
         {book ? 'Edit Book' : 'Add New Book'}
       </Typography>

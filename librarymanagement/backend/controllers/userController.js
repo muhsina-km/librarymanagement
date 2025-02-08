@@ -5,13 +5,21 @@ const bcrypt = require('bcryptjs');
 // Register a new user
 const registerUser = async (req, res) => {
   try {
-    const user = new User(req.body);
+    const { name, email, password } = req.body;
+
+    // Password length validation
+    if (!password || password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long.' });
+    }
+
+    const user = new User({ name, email, password });
     await user.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
+
 
 // Login user
 const loginUser = async (req, res) => {

@@ -16,6 +16,14 @@ const Navbar = () => {
           </Typography>
           {isAuthenticated && (
             <>
+        <div>
+        <Button color="inherit" component={Link} to="/dashboard">
+        home
+              </Button>
+        <Button color="inherit" component={Link} to="/borrow-history">
+                Borrow History
+              </Button>
+        </div>
               {/* Profile Icon */}
               <Tooltip title="Profile">
                 <IconButton color="inherit" component={Link} to="/profile">

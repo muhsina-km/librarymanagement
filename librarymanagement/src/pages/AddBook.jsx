@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BookForm from '../pages/BookForm';
 import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
 const AddBook = () => {
   const navigate = useNavigate();
 
   const handleSave = () => {
-    navigate('/dashboard'); // Redirect to the dashboard after saving
+    navigate('/dashboard');
   };
 
   return (

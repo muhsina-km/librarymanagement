@@ -12,6 +12,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Password length validation
+    if (password.length < 8) {
+      setAlert({ message: 'Password must be at least 8 characters long.', severity: 'error' });
+      return;
+    }
+  
     try {
       await API.post('/users/register', { name, email, password });
       setAlert({ message: 'Registration Successful!', severity: 'success' }); 
@@ -19,9 +26,10 @@ const Register = () => {
         navigate('/login');
       }, 2000);
     } catch (err) {
-        setAlert({ message: 'This email is already Registered', severity: 'error' }); 
+      setAlert({ message: 'This email is already registered', severity: 'error' }); 
     }
   };
+  
 
   return (
     <Container maxWidth="sm">

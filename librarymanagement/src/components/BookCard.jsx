@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardMedia, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import API from '../utils/api';
 import { useAuth } from '../context/AuthContext';
@@ -21,6 +21,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const BookCard = ({ book }) => {
   const [openDialog, setOpenDialog] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [balert, bsetAlert] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -37,11 +39,11 @@ const BookCard = ({ book }) => {
     if (confirmDelete) {
       try {
         await API.delete(`/books/${book._id}`);
-        alert('Book deleted successfully');
+        setAlert({ message: 'Book deleted successfully!', severity: 'success' });
         window.location.reload();
       } catch (err) {
         console.error('Delete Error:', err.response?.data || err.message);
-        alert('Failed to delete book');
+        setAlert({ message: 'Failed to delete book', severity: 'error' });
       }
     }
   };
@@ -70,14 +72,14 @@ const BookCard = ({ book }) => {
       const data = await response.json();
   
       if (response.ok) {
-        alert("Book borrowed successfully");
+        bsetAlert({ message: 'Book borrowed successfully!', severity: 'success' });
         window.location.reload();  // Refresh to update UI
       } else {
         alert(data.error);
       }
     } catch (err) {
       console.error("Error:", err);
-      alert("Failed to borrow book");
+      bsetAlert({ message: 'Failed to borrow book', severity: 'error' });
     }
   };
   
@@ -85,6 +87,8 @@ const BookCard = ({ book }) => {
   return (
     <StyledCard>
       <CardContent>
+        {alert && <Alert severity={alert.severity}>{alert.message}</Alert>}
+        {balert && <Alert severity={balert.severity}>{balert.message}</Alert>}
         <Typography variant="h6" fontWeight="bold" color="primary" gutterBottom>
           {book.title}
         </Typography>

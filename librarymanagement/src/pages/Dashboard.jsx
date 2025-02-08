@@ -32,24 +32,30 @@ const Dashboard = () => {
     }
   };
 
+  const handleGoBack = () => {
+    setSearchQuery(''); 
+    fetchBooks(); 
+  };
+
   return (
     <Container>
-      <Typography variant="h4" gutterBottom style={{ textAlign: 'center', fontWeight: 'bold' }}>
-        Dashboard
-      </Typography>
-
+    
       {/* If the user is an admin, show the "Add New Book" button, else show the search field */}
       {user?.role === 'admin' ? (
         // Admin user: Show only "Add New Book" button
+        <Typography variant="h5" gutterBottom style={{ fontWeight: 'bold' }}>
+          Add New Books : 
+        
         <Button
           variant="contained"
           color="primary"
           component={Link}
           to="/add-book"
-          style={{ marginBottom: '20px' }}
+          style={{ marginLeft: '15px' }}
         >
           Add New Book
         </Button>
+        </Typography>
       ) : (
         // Regular user: Show search field
         <>
@@ -63,26 +69,16 @@ const Dashboard = () => {
           <Button variant="contained" onClick={handleSearch} style={{ marginBottom: '20px' }}>
             Search
           </Button>
-             <br />
-        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-        <h4 style={{ marginRight: '10px' }}>Here is your borrow history:</h4>
-        <Button
-            variant="contained"
-            color="success"
-            component={Link}
-            to="/borrow-history"
-            style={{marginTop: '-20px'}}
-        >
-            Borrow Details
-        </Button>
-        </div>
         </>
+        
       )}
-         
-      <Typography variant="h4" gutterBottom style={{ fontWeight: 'bold' }}>
-        Available Books :
+
+      
+     <Typography variant="h4" gutterBottom style={{ textAlign: 'center', fontWeight: 'bold' }}>
+        Available Books
       </Typography>
 
+      {books.length > 0 ? (
       <Grid container spacing={3}>
         {books.map((book) => (
           <Grid item key={book._id} xs={12} sm={6} md={4}>
@@ -90,6 +86,16 @@ const Dashboard = () => {
           </Grid>
         ))}
       </Grid>
+    ) : (
+      <Typography variant="body1" style={{ textAlign: 'center', marginTop: '30px' }}>
+        Book Not Found. 
+        <br />
+        <Button variant="contained" onClick={handleGoBack} style={{ marginTop: '30px' }}>
+        back to home
+      </Button>
+      </Typography>
+    )}
+
     </Container>
   );
 };

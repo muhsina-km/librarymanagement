@@ -70,28 +70,15 @@ const returnBook = async (req, res) => {
 
 // View borrowing history
 const getBorrowHistory = async (req, res) => {
-    console.log("Fetching borrow history for user:", req.user.id);
-    
-    try {
+  console.log("Fetching borrow history for user:", req.user.id);
+  try {
       const history = await Borrow.find({ user: req.user.id }).populate("book");
       console.log("Borrow history found:", history);
       res.json(history);
-    } catch (err) {
+  } catch (err) {
       console.error("Error fetching borrow history:", err);
       res.status(500).json({ error: err.message });
-    }
-  };
-  
-
-// Get user's borrowing history (borrowed books with their return dates)
-const getBorrow = async (req, res) => {
-    try {
-      const history = await Borrow.find({ user: req.user.id }).populate('book');
-      res.json(history);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  };
-  
+  }
+};
 
 module.exports = { borrowBook, returnBook, getBorrowHistory };
